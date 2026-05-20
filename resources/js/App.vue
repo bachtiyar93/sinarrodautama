@@ -378,6 +378,18 @@ onMounted(fetchData);
             </div>
         </main>
 
+        <!-- Footer -->
+        <footer class="bg-white border-t border-slate-200 py-6 mt-auto">
+            <div class="max-w-7xl mx-auto px-4 text-center">
+                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest">
+                    &copy; 2026 PT. Sinar Roda Utama - Internal System
+                </p>
+                <p class="text-slate-500 text-[10px] mt-1 font-medium">
+                    Created by <span class="text-blue-600 font-bold">bachtiyar93</span>
+                </p>
+            </div>
+        </footer>
+
         <!-- TASK MODAL -->
         <transition name="modal">
             <div v-if="showTaskModal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
