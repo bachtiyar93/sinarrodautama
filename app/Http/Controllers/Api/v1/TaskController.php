@@ -11,51 +11,31 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class TaskController extends Controller
 {
-    /**
-     * Display a listing of the tasks.
-     */
     public function index(): AnonymousResourceCollection
     {
-        return TaskResource::collection(Task::latest()->get());
+        return TaskResource::collection(Task::with('assignee')->latest()->get());
     }
 
-    /**
-     * Store a newly created task in storage.
-     */
     public function store(TaskRequest $request): TaskResource
     {
         $task = Task::create($request->validated());
-
-        return new TaskResource($task);
+        return new TaskResource($task->load('assignee'));
     }
 
-    /**
-     * Display the specified task.
-     */
     public function show(Task $task): TaskResource
     {
-        return new TaskResource($task);
+        return new TaskResource($task->load('assignee'));
     }
 
-    /**
-     * Update the specified task in storage.
-     */
     public function update(TaskRequest $request, Task $task): TaskResource
     {
         $task->update($request->validated());
-
-        return new TaskResource($task);
+        return new TaskResource($task->load('assignee'));
     }
 
-    /**
-     * Remove the specified task from storage.
-     */
     public function destroy(Task $task): JsonResponse
     {
         $task->delete();
-
-        return response()->json([
-            'message' => 'Task deleted successfully'
-        ], 200);
+        return response()->json(['message' => 'Task deleted successfully'], 200);
     }
 }
