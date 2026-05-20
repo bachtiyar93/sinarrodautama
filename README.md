@@ -1,58 +1,162 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Sinar Roda Utama Task Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistem manajemen tugas internal untuk **PT. Sinar Roda Utama** yang dibangun menggunakan Laravel 11 dan Vue.js 3. Proyek ini mengimplementasikan API CRUD dengan standar arsitektur Laravel modern dan desain antarmuka berbasis Utility-Driven Design (Tailwind CSS).
 
-## About Laravel
+## 🚀 Fitur Utama
+- **Manajemen Karyawan**: CRUD lengkap untuk data karyawan/penanggung jawab.
+- **Manajemen Tugas (Tasks)**: 
+    - Penugasan tugas ke karyawan tertentu.
+    - Validasi rentang tanggal (Start & End Date).
+    - Status tugas otomatis: `Pending`, `Ongoing`, `Done`, dan `Overdue`.
+    - Bulk Delete: Menghapus banyak tugas sekaligus menggunakan checklist.
+- **Antarmuka Modern**: Dashboard responsif dengan pendekatan Atomic Design.
+- **API Versioning**: Menggunakan standar `/api/v1/` untuk skalabilitas.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🛠️ Tech Stack
+- **Backend**: Laravel 11 (PHP 8.2+)
+- **Frontend**: Vue.js 3 (Composition API)
+- **Styling**: Tailwind CSS
+- **Database**: SQLite (Default)
+- **Build Tool**: Vite
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 📥 Instalasi Lokal
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Ikuti langkah-langkah berikut untuk menjalankan proyek di komputer Anda:
 
-## Learning Laravel
+1. **Clone Proyek**
+   ```bash
+   git clone <repository-url>
+   cd sinarrodautama
+   ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+2. **Instalasi Dependencies (Backend)**
+   ```bash
+   composer install
+   ```
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+3. **Instalasi Dependencies (Frontend)**
+   ```bash
+   npm install
+   ```
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+4. **Konfigurasi Environment**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
 
-## Agentic Development
+5. **Persiapan Database (SQLite)**
+   Secara default proyek ini menggunakan SQLite.
+   - Buat file database kosong:
+     ```bash
+     # Windows (PowerShell)
+     New-Item database/database.sqlite
+     # Linux/Mac
+     touch database/database.sqlite
+     ```
+   - Jalankan Migrasi:
+     ```bash
+     php artisan migrate
+     ```
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+6. **Menjalankan Proyek**
+   Buka dua terminal terpisah:
+   - **Terminal 1 (Backend):**
+     ```bash
+     php artisan serve
+     ```
+   - **Terminal 2 (Frontend):**
+     ```bash
+     npm run dev
+     ```
+   Akses aplikasi di: `http://localhost:8000`
 
-```bash
-composer require laravel/boost --dev
+---
 
-php artisan boost:install
+## 📄 Dokumentasi Postman
+
+Gunakan JSON di bawah ini untuk menguji API melalui Postman.
+
+### Cara Menggunakan:
+1. Copy seluruh kode JSON di bawah.
+2. Buka Postman.
+3. Klik tombol **Import** (di pojok kiri atas).
+4. Pilih tab **Raw text** dan paste kodenya.
+5. Klik **Continue** lalu **Import**.
+
+### Postman Collection JSON:
+```json
+{
+	"info": {
+		"name": "Sinar Roda Utama API v2 - Complete",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Employees (Karyawan)",
+			"item": [
+				{
+					"name": "List All Employees",
+					"request": {
+						"method": "GET",
+						"header": [ { "key": "Accept", "value": "application/json" } ],
+						"url": "http://localhost:8000/api/v1/users"
+					}
+				},
+				{
+					"name": "Create Employee",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Budi Santoso\",\n    \"email\": \"budi@sinarroda.com\",\n    \"password\": \"password123\"\n}"
+						},
+						"url": "http://localhost:8000/api/v1/users"
+					}
+				}
+			]
+		},
+		{
+			"name": "2. Tasks",
+			"item": [
+				{
+					"name": "List All Tasks",
+					"request": {
+						"method": "GET",
+						"header": [ { "key": "Accept", "value": "application/json" } ],
+						"url": "http://localhost:8000/api/v1/tasks"
+					}
+				},
+				{
+					"name": "Create Task",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Audit Inventaris\",\n    \"description\": \"Pengecekan stok fisik\",\n    \"start_date\": \"2026-05-20\",\n    \"end_date\": \"2026-05-25\",\n    \"assigned_to\": 1\n}"
+						},
+						"url": "http://localhost:8000/api/v1/tasks"
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000/api/v1"
+		}
+	]
+}
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+**PT. Sinar Roda Utama** - *Internal Management System v1.0*
