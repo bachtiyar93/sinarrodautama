@@ -84,11 +84,12 @@ Gunakan JSON di bawah ini untuk menguji API melalui Postman.
 4. Pilih tab **Raw text** dan paste kodenya.
 5. Klik **Continue** lalu **Import**.
 
-### Postman Collection JSON:
+### Postman Collection JSON (v2 - Full & Final):
 ```json
 {
 	"info": {
-		"name": "Sinar Roda Utama API v2 - Complete",
+		"name": "Sinar Roda Utama API v2 - Final",
+		"description": "Dokumentasi API Lengkap (Tasks & Employees) dengan dukungan mitigasi error dan validasi tanggal.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -100,7 +101,7 @@ Gunakan JSON di bawah ini untuk menguji API melalui Postman.
 					"request": {
 						"method": "GET",
 						"header": [ { "key": "Accept", "value": "application/json" } ],
-						"url": "http://localhost:8000/api/v1/users"
+						"url": "{{base_url}}/users"
 					}
 				},
 				{
@@ -115,7 +116,29 @@ Gunakan JSON di bawah ini untuk menguji API melalui Postman.
 							"mode": "raw",
 							"raw": "{\n    \"name\": \"Budi Santoso\",\n    \"email\": \"budi@sinarroda.com\",\n    \"password\": \"password123\"\n}"
 						},
-						"url": "http://localhost:8000/api/v1/users"
+						"url": "{{base_url}}/users"
+					}
+				},
+				{
+					"name": "Update Employee",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Budi S. Updated\",\n    \"email\": \"budi_new@sinarroda.com\"\n}"
+						},
+						"url": "{{base_url}}/users/1"
+					}
+				},
+				{
+					"name": "Delete Employee",
+					"request": {
+						"method": "DELETE",
+						"url": "{{base_url}}/users/1"
 					}
 				}
 			]
@@ -128,11 +151,11 @@ Gunakan JSON di bawah ini untuk menguji API melalui Postman.
 					"request": {
 						"method": "GET",
 						"header": [ { "key": "Accept", "value": "application/json" } ],
-						"url": "http://localhost:8000/api/v1/tasks"
+						"url": "{{base_url}}/tasks"
 					}
 				},
 				{
-					"name": "Create Task",
+					"name": "Create Task (Ongoing)",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -141,9 +164,31 @@ Gunakan JSON di bawah ini untuk menguji API melalui Postman.
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"Audit Inventaris\",\n    \"description\": \"Pengecekan stok fisik\",\n    \"start_date\": \"2026-05-20\",\n    \"end_date\": \"2026-05-25\",\n    \"assigned_to\": 1\n}"
+							"raw": "{\n    \"title\": \"Audit Inventaris Gudang\",\n    \"description\": \"Pengecekan stok fisik roda utama\",\n    \"start_date\": \"2026-05-20\",\n    \"end_date\": \"2026-05-25\",\n    \"assigned_to\": 1\n}"
 						},
-						"url": "http://localhost:8000/api/v1/tasks"
+						"url": "{{base_url}}/tasks"
+					}
+				},
+				{
+					"name": "Update Task Details/Status",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Judul Revisi\",\n    \"is_completed\": true,\n    \"start_date\": \"2026-05-21\",\n    \"end_date\": \"2026-05-26\"\n}"
+						},
+						"url": "{{base_url}}/tasks/1"
+					}
+				},
+				{
+					"name": "Delete Single Task",
+					"request": {
+						"method": "DELETE",
+						"url": "{{base_url}}/tasks/1"
 					}
 				}
 			]

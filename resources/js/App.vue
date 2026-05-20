@@ -2,6 +2,23 @@
 import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 
+// API Config
+axios.defaults.headers.common['Accept'] = 'application/json';
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+// Global Error Handling (Mitigasi)
+axios.interceptors.response.use(
+    response => response,
+    error => {
+        const message = error.response?.data?.message || 'Terjadi kesalahan sistem';
+        showToast(message, 'error');
+        if (error.response?.status === 419) {
+            window.location.reload(); // Session expired
+        }
+        return Promise.reject(error);
+    }
+);
+
 // State
 const tasks = ref([]);
 const users = ref([]);
